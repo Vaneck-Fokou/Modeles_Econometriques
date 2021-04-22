@@ -1,0 +1,42 @@
+library(readxl)
+MaBase <- read_excel("C:/MOOC/LECON02/CYTISE_CENTREE.xlsx")
+
+attach(MaBase)
+
+'SPECIFICATION NIVEAU-NIVEAU'
+
+RLM <- lm(POURC_TB_SANTE ~ REVMED_MEUROS_C + POURC_DIP_ENS_SUP_C + TXEMPLOI_POURC_C + POURC_GROSMENAGESMIN5_C + POURC_ELEVES_ETUDIANTS_C + POURC_PREPEN_PENS_C)
+summary(RLM)
+
+'DY = b * DX (b mesure l effet marginal de X sur Y)'
+
+
+
+'SPECIFICATION NIVEAU-LOG'
+
+View(REVMED_MEUROS_C)
+X2ERREUR <- log(REVMED_MEUROS_C)
+
+RLM <- lm(POURC_TB_SANTE ~ log(REVMED_MEUROS) + POURC_DIP_ENS_SUP_C + TXEMPLOI_POURC_C + POURC_GROSMENAGESMIN5_C + POURC_ELEVES_ETUDIANTS_C + POURC_PREPEN_PENS_C)
+summary(RLM)
+
+'Il faut diviser b par 100 et considérer une variation en pourcent de X: DY = b/100 * %DX'
+
+
+
+'SPECIFICATION LOG-NIVEAU'
+
+RLM <- lm(log(POURC_TB_SANTE) ~ REVMED_MEUROS_C + POURC_DIP_ENS_SUP_C + TXEMPLOI_POURC_C + POURC_GROSMENAGESMIN5_C + POURC_ELEVES_ETUDIANTS_C + POURC_PREPEN_PENS_C)
+summary(RLM)
+
+'Il faut multiplier le coefficient de X par 100 et considerer une variation de Y en pourcentage (approximation): %DY = 100 * b * DX.
+La variation exacte: %DY = 100(exp(b*DX)-1)'
+
+
+
+'SPECIFICATION LOG-LOG'
+
+RLM <- lm(log(POURC_TB_SANTE) ~ log(REVMED_MEUROS) + POURC_DIP_ENS_SUP_C + TXEMPLOI_POURC_C + POURC_GROSMENAGESMIN5_C + POURC_ELEVES_ETUDIANTS_C + POURC_PREPEN_PENS_C)
+summary(RLM)
+
+'%DY = b * %DX'

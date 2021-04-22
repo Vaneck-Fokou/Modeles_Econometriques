@@ -1,0 +1,18 @@
+install.packages('readxl')
+library(readxl)
+MaBase <- read_excel("C:/MOOC/LECON02/CYTISE.xlsx")
+
+View(MaBase)
+summary(MaBase)
+attach(MaBase)
+
+hist(POURC_TB_SANTE)
+hist(REVMED_MEUROS)
+plot(REVMED_MEUROS, POURC_TB_SANTE, xlab = "revenu médian", ylab = "% TB santé", main = "% TB santé vs revenu médian")
+abline(lm(POURC_TB_SANTE ~ REVMED_MEUROS))
+
+RLS <- lm(POURC_TB_SANTE ~ REVMED_MEUROS)
+summary(RLS)
+
+RLM <- lm(POURC_TB_SANTE ~ REVMED_MEUROS + POURC_DIP_ENS_SUP + TXEMPLOI_POURC + POURC_MEN_MONOP_FEM + POURC_GROSMENAGESMIN5 + POURC_ELEVES_ETUDIANTS + POURC_PREPEN_PENS + POURC_POPU_VEUVE + POURC_ETRANG_NES_ETRANG + OXYDEAZOTE_TONNE_KM2 + VALMHAB_MEUROS)
+summary(RLM)
